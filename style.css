@@ -1,0 +1,43 @@
+#game {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: lightslategray;
+    height: 100vh;
+    width: 100vw;
+    gap: 25px;
+}
+
+#grid {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#turn-tracker {
+    text-align: center;
+    color: white;
+    font-size: 50px;
+}
+
+#reset-button {
+    text-align: center;
+    align-self: center;
+    padding: 10px;
+    background-color: darkred;
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+}
+
+.grid-row {
+    display: flex;
+    gap: 5px;
+}
+
+.cell {
+    background-color: white;
+    height: 150px;
+    width: 150px;
+}
