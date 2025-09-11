@@ -31,6 +31,14 @@
     font-size: 15px;
 }
 
+.player-cell {
+    background-color: blue !important;
+}
+
+.computer-cell {
+    background-color: red !important;
+}
+
 .grid-row {
     display: flex;
     gap: 5px;
