@@ -20,6 +20,10 @@
             gameOver: false,
             playerOneTurn: true,
             twoPlayerMode: false,
+            playerOneName: "Player",
+            playerTwoName: "Computer",
+            playerScore: 0,
+            computerScore: 0,
 
             // Create a function to print the grid to the console
             printGrid() {
@@ -42,8 +46,6 @@
             // Create a function to change one of the grid characters
             changeGrid(position, character) {
                 this.grid[position] = character;
-                this.detectVictory(character);
-                //this.printGrid();
             },
             detectVictory(character) {
                 let victory = false;
@@ -65,8 +67,16 @@
                 
                 if (victory) {
                     const victoryMessage = document.getElementById("turn-tracker");
-                    if (character === "X") { victoryMessage.textContent = "The Player Wins!"; }
-                    else {victoryMessage.textContent = "The Computer Wins!"; }
+                    if (character === "X") {
+                        victoryMessage.textContent = "The Player Wins!";
+                        this.playerScore++;
+                    }
+                    else {
+                        victoryMessage.textContent = "The Computer Wins!";
+                        this.computerScore += 1;
+                    }
+                    this.updateScoreDisplay();
+
                 }
 
                 this.gameOver = victory;
@@ -98,6 +108,16 @@
 
                 //console.log("Player turn completed");
             },
+            updateScoreDisplay() {
+                // Update player one's score
+                const playerScoreDisplay = document.getElementById("player-score");
+                playerScoreDisplay.textContent = this.playerOneName + " Score: " + this.playerScore;
+                
+                // Update player two's score
+                const computerScoreDisplay = document.getElementById("computer-score");
+                computerScoreDisplay.textContent = this.playerTwoName + " Score: " + this.computerScore;
+                
+            },
             async turnLogic(position) {
                 const turnText = document.getElementById("turn-tracker");
                 if (!this.gameOver && !this.twoPlayerMode) {
@@ -106,6 +126,7 @@
 
                     // Check if the player won
                     if (this.detectVictory("X")) {
+                        this.playerOneScore--;
                         return;
                     }
 
@@ -122,6 +143,7 @@
                     this.computerTurn();
 
                     if (this.detectVictory("O")) {
+                        this.computerScore--;
                         return;
                     }
 
@@ -219,13 +241,31 @@
             turnText.textContent = "Player's turn..."
         }
         gameGrid.grid = [];
-        gameGrid.gameOver = false;        
+        gameGrid.gameOver = false;
+
+        this.playerScore = 0;
+        this.computerScore = 0;
+
         for (let i = 0; i < 9; i++) {
             gameGrid.grid.push(-1);
         }
         generateDomGrid();
 
         console.log("Two player mode enabled: " + gameGrid.twoPlayerMode);
+    });
+
+    // Create the player one rename button event listener
+    const playerOneButton = document.getElementById("player-1-button");
+    playerOneButton.addEventListener("click", () => {
+        gameGrid.playerOneName = prompt("What's player one's name?");
+        gameGrid.updateScoreDisplay();
+    });
+
+    // Create the player two rename button event listener
+    const playerTwoButton = document.getElementById("player-2-button");
+    playerTwoButton.addEventListener("click", () => {
+        gameGrid.playerTwoName = prompt("What's player two's name?");
+        gameGrid.updateScoreDisplay();
     });
 
     generateDomGrid();

@@ -8,12 +8,19 @@
     <body>
         <div id="game">
             <div id="turn-tracker">Player's turn...</div>
-            <div id="score-board">
-                <div id="score-title">Score Board:</div>
-                <div id="player-score"></div>
-                <div id="computer-score"></div>
+            <div id="main-container">
+                <div id="score-board">
+                    <div id="score-title">Score Board:</div>
+                    <div id="player-score" class="score">Player Score: 0</div>
+                    <div id="computer-score" class="score">Computer Score: 0</div>
+                    <div id="button-box">
+                        <button class="name-button" id="player-1-button">Change Player 1 Name</button>
+                        <button class="name-button" id="player-2-button">Change Player 2 Name</button>
+                    </div>
+                </div>
+                <div id="grid"></div>
             </div>
-            <div id="grid"></div>
+            
             <div id="buttons">
                 <button id="reset-button">Reset Game</button>
                 <button id="toggle-button">Toggle Game Mode</button>
