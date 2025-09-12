@@ -31,6 +31,21 @@
     font-size: 15px;
 }
 
+#toggle-button {
+    text-align: center;
+    align-self: center;
+    padding: 10px;
+    background-color: blue;
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+}
+
+#score-board {
+    background-color: darkslategray;
+    box-shadow: 5px 5px 0.5 0.5 rgba(0, 0, 0, 0.3);
+}
+
 .player-cell {
     background-color: blue !important;
 }

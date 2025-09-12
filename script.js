@@ -18,7 +18,8 @@
             // Create the gamegrid varaibles
             grid: grid,
             gameOver: false,
-            playerTurnNow: true,
+            playerOneTurn: true,
+            twoPlayerMode: false,
 
             // Create a function to print the grid to the console
             printGrid() {
@@ -64,7 +65,7 @@
                 
                 if (victory) {
                     const victoryMessage = document.getElementById("turn-tracker");
-                    if (character = "X") { victoryMessage.textContent = "The Player Wins!"; }
+                    if (character === "X") { victoryMessage.textContent = "The Player Wins!"; }
                     else {victoryMessage.textContent = "The Computer Wins!"; }
                 }
 
@@ -83,27 +84,40 @@
                 const cell = document.getElementById(position);
                 cell.classList.add("computer-cell");
 
-                console.log("Computer turn completed");
+                //console.log("Computer turn completed");
             },
-            playerTurn(position) {
-                this.changeGrid(position, "X");
+            playerTurn(position, character) {
+                this.changeGrid(position, character);
 
                 const cell = document.getElementById(position);
-                cell.classList.add("player-cell");
+                if (this.playerOneTurn) {
+                    cell.classList.add("player-cell");
+                } else {
+                    cell.classList.add("computer-cell");
+                }
 
-                console.log("Player turn completed");
+                //console.log("Player turn completed");
             },
             async turnLogic(position) {
                 const turnText = document.getElementById("turn-tracker");
-                if (!this.gameOver) {
-                    this.playerTurn(position);
+                if (!this.gameOver && !this.twoPlayerMode) {
+                    if (!this.playerOneTurn) { return; }
+                    this.playerTurn(position, "X");
 
                     // Check if the player won
                     if (this.detectVictory("X")) {
                         return;
                     }
 
+                    // Check if all the squares are full
+                    if (!this.grid.includes(-1)) {
+                        this.gameOver = true;
+                        turnText.textContent = "It's a draw";
+                        return;
+                    }
+
                     turnText.textContent = "Computer's turn...";
+                    this.playerOneTurn = false;
                     await delay(2000);
                     this.computerTurn();
 
@@ -112,6 +126,32 @@
                     }
 
                     turnText.textContent = "Player's turn..."
+                    this.playerOneTurn = true;
+                } else if (!this.gameOver && this.twoPlayerMode) {
+                    if (this.playerOneTurn) {
+                        this.playerTurn(position, "X");
+                        turnText.textContent = "Player 2's turn.";
+
+                        // Check for a victory
+                        if (this.detectVictory("X")) {
+                            this.gameOver = true;
+                            turnText.textContent = "Player 1 wins!";
+                            return;
+                        }
+
+                    } else {
+                        this.playerTurn(position, "O");
+                        turnText.textContent = "Player 1's turn";
+
+                        // Check for a victory
+                        if (this.detectVictory("O")) {
+                            this.gameOver = true;
+                            turnText.textContent = "Player 2 wins!";
+                            return;
+                        }
+
+                    }
+                    this.playerOneTurn = !this.playerOneTurn;
                 }
             }
         }
@@ -147,6 +187,46 @@
             grid.appendChild(row);
         }
     }
+
+    // Reset the game when the player clicks the reset button
+    const resetButton = document.getElementById("reset-button");
+    resetButton.addEventListener("click", () => {
+        gameGrid.grid = [];
+        gameGrid.gameOver = false;
+        gameGrid.playerOneTurn = true;
+        const turnText = document.getElementById("turn-tracker");
+        if (gameGrid.twoPlayerMode) {
+            turnText.textContent = "Player 1's turn..."
+        } else {
+            turnText.textContent = "Player's turn...";
+        }
+        for (let i = 0; i < 9; i++) {
+            gameGrid.grid.push(-1);
+        }
+        generateDomGrid();
+
+        console.log("Two player mode disabled: " + gameGrid.twoPlayerMode);
+    });
+
+    // Toggle between single player and multiplayer mode
+    const toggleButton = document.getElementById("toggle-button");
+    toggleButton.addEventListener("click", () => {
+        const turnText = document.getElementById("turn-tracker");
+        gameGrid.twoPlayerMode = !gameGrid.twoPlayerMode;
+        if (gameGrid.twoPlayerMode) {
+            turnText.textContent = "Player 1's turn..."
+        } else {
+            turnText.textContent = "Player's turn..."
+        }
+        gameGrid.grid = [];
+        gameGrid.gameOver = false;        
+        for (let i = 0; i < 9; i++) {
+            gameGrid.grid.push(-1);
+        }
+        generateDomGrid();
+
+        console.log("Two player mode enabled: " + gameGrid.twoPlayerMode);
+    });
 
     generateDomGrid();
 
