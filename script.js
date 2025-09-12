@@ -68,11 +68,11 @@
                 if (victory) {
                     const victoryMessage = document.getElementById("turn-tracker");
                     if (character === "X") {
-                        victoryMessage.textContent = "The Player Wins!";
+                        victoryMessage.textContent = this.playerOneName + " Wins!";
                         this.playerScore++;
                     }
                     else {
-                        victoryMessage.textContent = "The Computer Wins!";
+                        victoryMessage.textContent = this.playerTwoName + " Wins!";
                         this.computerScore += 1;
                     }
                     this.updateScoreDisplay();
@@ -137,7 +137,7 @@
                         return;
                     }
 
-                    turnText.textContent = "Computer's turn...";
+                    turnText.textContent = this.playerTwoName + "'s turn...";
                     this.playerOneTurn = false;
                     await delay(2000);
                     this.computerTurn();
@@ -147,28 +147,28 @@
                         return;
                     }
 
-                    turnText.textContent = "Player's turn..."
+                    turnText.textContent = this.playerOneName + "'s turn..."
                     this.playerOneTurn = true;
                 } else if (!this.gameOver && this.twoPlayerMode) {
                     if (this.playerOneTurn) {
                         this.playerTurn(position, "X");
-                        turnText.textContent = "Player 2's turn.";
+                        turnText.textContent = this.playerTwoName + "'s turn.";
 
                         // Check for a victory
                         if (this.detectVictory("X")) {
                             this.gameOver = true;
-                            turnText.textContent = "Player 1 wins!";
+                            turnText.textContent = this.playerOneName + "'s wins!";
                             return;
                         }
 
                     } else {
                         this.playerTurn(position, "O");
-                        turnText.textContent = "Player 1's turn";
+                        turnText.textContent = this.playerOneName + "'s turn";
 
                         // Check for a victory
                         if (this.detectVictory("O")) {
                             this.gameOver = true;
-                            turnText.textContent = "Player 2 wins!";
+                            turnText.textContent = this.playerTwoName + "'s wins!";
                             return;
                         }
 
@@ -218,9 +218,9 @@
         gameGrid.playerOneTurn = true;
         const turnText = document.getElementById("turn-tracker");
         if (gameGrid.twoPlayerMode) {
-            turnText.textContent = "Player 1's turn..."
+            turnText.textContent = gameGrid.playerOneName + "'s turn..."
         } else {
-            turnText.textContent = "Player's turn...";
+            turnText.textContent = gameGrid.playerOneName + "'s turn...";
         }
         for (let i = 0; i < 9; i++) {
             gameGrid.grid.push(-1);
@@ -236,9 +236,9 @@
         const turnText = document.getElementById("turn-tracker");
         gameGrid.twoPlayerMode = !gameGrid.twoPlayerMode;
         if (gameGrid.twoPlayerMode) {
-            turnText.textContent = "Player 1's turn..."
+            turnText.textContent = gameGrid.playerOneName + "'s turn..."
         } else {
-            turnText.textContent = "Player's turn..."
+            turnText.textContent = gameGrid.playerOneName + "'s turn..."
         }
         gameGrid.grid = [];
         gameGrid.gameOver = false;
