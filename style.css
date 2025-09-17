@@ -63,6 +63,7 @@ html {
     width: 300px;
     border: 4px solid black;
     border-radius: 16px;
+    padding: 12px;
 }
 
 #score-title {
@@ -78,6 +79,11 @@ html {
     margin-top: auto;
 }
 
+#score-row {
+    display: flex;
+    justify-content: space-around;
+}
+
 .name-button {
     background-color: darkgreen;
     color: white;
@@ -87,8 +93,12 @@ html {
 
 .score {
     color: white;
-    font-size: 15px;
+    font-size: 20px;
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .player-cell {
@@ -116,4 +126,14 @@ html {
 .cell:hover {
     background-color: gray;
     transform: scale(1.05);
+}
+
+button {
+    transition: filter 0.5s;
+    transition: transform 0.5s;
+}
+
+button:hover {
+    transform: scale(1.15);
+    filter: brightness(0.75);
 }

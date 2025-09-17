@@ -53,7 +53,7 @@
                 // TODO detect victory
                 const winningCombinations = [
                     [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-                    [0, 3, 6], [1, 5, 7], [2, 5, 8], // Columns
+                    [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
                     [0, 4, 8], [2, 4, 6]             // Diagonals
                 ]
 
@@ -114,11 +114,15 @@
             updateScoreDisplay() {
                 // Update player one's score
                 const playerScoreDisplay = document.getElementById("player-score");
-                playerScoreDisplay.textContent = this.playerOneName + " Score: " + this.playerScore;
+                playerScoreDisplay.textContent = this.playerOneName + " Score: ";
+                const playerScoreValue = document.getElementById("player-score-value");
+                playerScoreValue.textContent = this.playerScore;
                 
                 // Update player two's score
                 const computerScoreDisplay = document.getElementById("computer-score");
-                computerScoreDisplay.textContent = this.playerTwoName + " Score: " + this.computerScore;
+                computerScoreDisplay.textContent = this.playerTwoName + " Score:";
+                const computerScoreValue = document.getElementById("computer-score-value");
+                computerScoreValue.textContent = this.computerScore;
                 
             },
             async turnLogic(position) {
