@@ -84,6 +84,7 @@
                 
             },
             computerTurn() {
+                document.getElementById("computer-sound").play();
                 let position = Math.floor(Math.random() * (8 - 0 + 1)) + 0;
 
                 while (this.grid[position] != -1) {
@@ -101,8 +102,10 @@
 
                 const cell = document.getElementById(position);
                 if (this.playerOneTurn) {
+                    document.getElementById("player-sound").play();
                     cell.classList.add("player-cell");
                 } else {
+                    document.getElementById("computer-sound").play();
                     cell.classList.add("computer-cell");
                 }
 
